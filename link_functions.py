@@ -43,7 +43,6 @@ def tutorial(screen):
 # activated when a user wants to exit the Game, leads to finish the program's execution or Main Menu
 def exit_program(screen):
     # f.play(exit_sound)
-    if mc.Exit("images/menu/exit/exit_game.png", screen).display_menu():
-        f.erase_active_user_data()
+    if mc.Exit("images/Menu/exit_menu.png", screen).display_menu():
         f.terminate_execution()
     return "main_menu"

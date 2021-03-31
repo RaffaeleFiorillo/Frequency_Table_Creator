@@ -51,15 +51,15 @@ def play(sound: pygame.mixer.Sound):
     sound.play()
 
 
-def play_music():
+"""def play_music():
     sound = music_sound
     volume = get_music_volume()
     sound.set_volume(volume)
-    sound.play(-1)
+    sound.play(-1)"""
 
 
-def music_fade_out():
-    music_sound.fadeout(2)
+"""def music_fade_out():
+    music_sound.fadeout(2)"""
 
 
 # stops all currently playing sounds
@@ -68,9 +68,9 @@ def stop_all_sounds():
 
 
 # ------------------------------------------ SOUNDS --------------------------------------------------------------------
-error_sound = load_sound("menu/error_message2.WAV")  # sound for every time an error occurs
-success_sound = load_sound("menu/success.WAV")       # sound for every time a success occurs
-music_sound = load_sound("game/music.WAV")
+# error_sound = load_sound("menu/error_message2.WAV")  # sound for every time an error occurs
+# success_sound = load_sound("menu/success.WAV")       # sound for every time a success occurs
+# music_sound = load_sound("game/music.WAV")
 
 
 # -------------------------------------------- MENU FUNCTIONS ----------------------------------------------------------
@@ -94,18 +94,18 @@ def get_music_volume():
         return 0.5
 
 
-def show_error_message(screen, code):
+"""def show_error_message(screen, code):
     play(error_sound)
     screen.blit(pygame.image.load(f"images/menu/messages/error{code}.png"), (230, 200))
     pygame.display.update()
-    wait(3)
+    wait(3)"""
 
 
-def show_success_message(screen, code) -> None:
+"""def show_success_message(screen, code) -> None:
     play(success_sound)
     screen.blit(pygame.image.load(f"images/menu/messages/success{code}.png"), (230, 200))
     pygame.display.update()
-    wait(3)
+    wait(3)"""
 
 
 def create_folder(nome_user):
