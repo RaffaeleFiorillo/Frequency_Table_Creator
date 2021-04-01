@@ -26,17 +26,17 @@ def start_page(screen):
 def main_menu(screen):
     # f.stop_all_sounds()
     # f.play(change_menu_sound)
-    position_x_main = (1080 - 260) // 2
+    position_x_main = (1150 - 260) // 2
     position_y_main = [y for y in range(150, 600, 150)]
-    effects_main = ["choose", "new", "exit1"]
-    buttons_main = [mc.Button(position_x_main, y, f"images/menu/buttons/1/{position_y_main.index(y) + 1}.png",
+    effects_main = ["new_table", "tutorial", "exit1"]
+    buttons_main = [mc.Button(position_x_main, y, f"images/Buttons/Main/{position_y_main.index(y) + 1}.png",
                               effects_main[position_y_main.index(y)], position_y_main.index(y)) for y in
                     position_y_main[:len(effects_main)]]
-    m_m = mc.Menu(buttons_main, f"images/menu/interfaces/Main/main menu.png", screen)
+    m_m = mc.Menu(buttons_main, f"images/Menu/main_menu.png", screen)
     return m_m.display_menu()
 
 
-def tutorial(screen):
+def tutorial():
     pass
 
 

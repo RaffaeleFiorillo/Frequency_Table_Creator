@@ -107,33 +107,24 @@ class Menu_image_sequence:
             self.refresh()
 
 
-# Used for the Main Menu, Game Menu and Tutorial
+# Used for the Main Menu
 class Menu:
-    def __init__(self, buttons, directory, screen, user=None):
+    def __init__(self, buttons, directory, screen):
         self.internal_list = buttons
         self.directory = directory
         self.name = self.directory.split("/")[-1][:-4]
         self.image_nome = pygame.image.load(directory)
-        if self.name == "game menu":
-            self.effect = [pygame.image.load(f"images/menu/effects/3/{i+1}.png") for i in range(4)]
-        else:
-            self.effect = [pygame.image.load(f"images/menu/effects/1/{i+1}.png") for i in range(4)]
+        self.effect = [pygame.image.load(f"images/Buttons/Effects/Main/{i+1}.png") for i in range(4)]
         self.active_code = 0
         self.screen = screen
         self.current_frame = 0
-        self.user = user
         self.coord_effect = (self.internal_list[0].x-12, self.internal_list[0].y-12)
 
     def draw_buttons(self):
-        coordinates = {0: (680, 90), 1: (698, 192), 2: (685, 178)}
-        coordinates2 = {0: (687, 90), 1: (687, 90), 2: (687, 192), 3: (687, 178), 4: (687, 178),  5: (687, 178)}
-        coordinates3 = {0: (680, 90), 1: (680, 90), 2: (698, 192), 3: (685, 178), 4: (685, 178)}
-        ch = {"main menu": coordinates, "game menu": coordinates2, "tutorial": coordinates3}
-        co_cho = ch[self.name]
-        coo = co_cho[self.active_code]
+        # coordinates = {0: (680, 90), 1: (698, 192), 2: (685, 178)}
         self.screen.blit(self.effect[int(self.current_frame)], self.coord_effect)
-        self.screen.blit(pygame.image.load(f"images/menu/info/info_{self.name}/{self.active_code+1}.png"),
-                         (coo[0], coo[1]))
+        """self.screen.blit(pygame.image.load(f"images/menu/info/info_{self.name}/{self.active_code+1}.png"),
+                         (coordinates[0], coordinates[1]))"""
         for but in self.internal_list:
             but.draw(self.screen)
         self.current_frame += 0.25
@@ -176,26 +167,18 @@ class Menu:
 
     def refresh(self, background):
         self.screen.blit(background, (0, 0))
-        self.screen.blit(self.image_nome, ((1080-470)//2, 0))
-        self.screen.blit(pygame.image.load("images/menu/interfaces/navigation/navigation.png"), (355, 620))
-        if self.user is not None:
-            coo = (20, 490)
-            self.screen.blit(pygame.image.load(f"images/menu/interfaces/User/user_info/level{self.user.level}.png"),
-                             (0, 0))
-            self.screen.blit(pygame.image.load(f"images/menu/interfaces/User/records.png"), (coo[0], coo[1]-210))
-            self.screen.blit(pygame.image.load(f"images/menu/interfaces/User/parts.png"), (0, coo[1] - 310))
-            self.screen.blit(pygame.image.load(f"images/cars/display/{self.user.level}.png"), (coo[0] - 18, coo[1]))
-            self.user.draw_text(self.screen)
+        self.screen.blit(self.image_nome, (0, 0))
+        # self.screen.blit(pygame.image.load("images/Buttons/Effects/Main/"), (355, 620))
         self.draw_buttons()
         pygame.display.update()
 
 
-# Used whenever the user wants to leave the game
+# Used whenever the user wants to leave the program
 class Exit:
     def __init__(self, directory, screen):
         self.image_nome = pygame.image.load(directory)
         self.effects = (True, False)
-        self.effect = [pygame.image.load(f"images/Buttons/Effects/1/{i+1}.png") for i in range(4)]
+        self.effect = [pygame.image.load(f"images/Buttons/Effects/Exit/{i+1}.png") for i in range(4)]
         self.yes_button_image = pygame.image.load(f"images/Buttons/Exit/1.png")
         self.no_button_image = pygame.image.load(f"images/Buttons/Exit/2.png")
         self.active_code = 0
@@ -222,7 +205,7 @@ class Exit:
             clock.tick(30)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    exit("Game Exit")
+                    f.terminate_execution()
                 if event.type == pygame.KEYDOWN:
                     effect = self.manage_buttons(pygame.key.get_pressed())
                     if effect is not None:
