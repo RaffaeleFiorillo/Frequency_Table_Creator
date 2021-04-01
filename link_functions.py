@@ -10,7 +10,7 @@ import menu_classes as mc
 import functions as f
 
 
-# ------------------------------------------ GAME START ----------------------------------------------------------------
+# ------------------------------------------ START INTERFACE -----------------------------------------------------------
 # this is the first interface the user sees when he opens the game
 def start_page(screen):
     start = mc.Start(screen)
@@ -40,7 +40,7 @@ def tutorial():
     pass
 
 
-# activated when a user wants to exit the Game, leads to finish the program's execution or Main Menu
+# activated when a user wants to exit the program, leads to finish the program's execution or Main Menu
 def exit_program(screen):
     # f.play(exit_sound)
     if mc.Exit("images/Menu/exit_menu.png", screen).display_menu():
