@@ -40,6 +40,19 @@ def tutorial():
     pass
 
 
+def display_table():
+    pass
+
+
+def create_table(screen):
+    exit_button = mc.Button(995, 675, "images/Buttons/Create_Table/exit.png", "exit_2", 2)
+    create_button = mc.Button((1150 - 260) // 2, 500, "images/Buttons/Create_Table/create.png", "create", 1)
+    buttons_tc = [create_button, exit_button]
+    tc = mc.Table_Creator(buttons_tc, screen)
+    tc.display_menu()
+    return "main_menu"
+
+
 # activated when a user wants to exit the program, leads to finish the program's execution or Main Menu
 def exit_program(screen):
     # f.play(exit_sound)

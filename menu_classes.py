@@ -96,7 +96,7 @@ class Menu_image_sequence:
         clock = pygame.time.Clock()
         keepGoing = True
         while keepGoing:
-            clock.tick(30)
+            clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return False
@@ -138,7 +138,7 @@ class Menu:
         clock = pygame.time.Clock()
         keepGoing = True
         while keepGoing:
-            clock.tick(30)
+            clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return False
@@ -202,7 +202,7 @@ class Exit:
         clock = pygame.time.Clock()
         keepGoing = True
         while keepGoing:
-            clock.tick(30)
+            clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     f.terminate_execution()
@@ -255,7 +255,7 @@ class Start:
         clock = pygame.time.Clock()
         keepGoing = True
         while keepGoing:
-            self.time += clock.tick(30) / 990
+            self.time += clock.tick(60) / 990
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return False
@@ -266,4 +266,64 @@ class Start:
     def refresh(self):
         self.screen.blit(self.image, (0, 0))
         self.show_directives()
+        pygame.display.update()
+
+
+class Table_Creator:
+    def __init__(self, buttons, screen):
+        self.internal_list = buttons
+        self.image_nome = pygame.image.load("images/Menu/table_creator_menu.png")
+        self.effect = [pygame.image.load(f"images/Buttons/Effects/Main/{i+1}.png") for i in range(4)]
+        self.active_code = 0
+        self.screen = screen
+        self.current_frame = 0
+        self.coord_effect = (self.internal_list[0].x-12, self.internal_list[0].y-12)
+
+    def draw_buttons(self):
+        self.screen.blit(self.effect[int(self.current_frame)], self.coord_effect)
+        for button in self.internal_list:
+            button.draw(self.screen)
+        self.current_frame += 0.25
+        if self.current_frame > 3:
+            self.current_frame = 0
+
+    def display_menu(self):
+        background = pygame.Surface(self.screen.get_size())
+        background = background.convert()
+        background.fill((0, 0, 0))
+        clock = pygame.time.Clock()
+        keepGoing = True
+        while keepGoing:
+            clock.tick(60)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return False
+                if event.type == pygame.KEYDOWN:
+                    effect = self.manage_buttons(pygame.key.get_pressed())
+                    if effect is not None:
+                        return effect
+            self.refresh(background)
+
+    def manage_buttons(self, keys):
+        valor = 0
+        if keys[pygame.K_UP]:
+            # f.play(button_y_sound)
+            valor = -1
+        elif keys[pygame.K_DOWN]:
+            # f.play(button_y_sound)
+            valor = 1
+        elif keys[pygame.K_KP_ENTER] or keys[pygame.K_RETURN]:
+            return self.internal_list[self.active_code].effect
+        self.active_code += valor
+        if self.active_code > len(self.internal_list)-1:
+            self.active_code = 0
+        if self.active_code < 0:
+            self.active_code = len(self.internal_list)-1
+        self.coord_effect = (self.internal_list[self.active_code].x-12, self.internal_list[self.active_code].y-12)
+
+    def refresh(self, background):
+        self.screen.blit(background, (0, 0))
+        self.screen.blit(self.image_nome, (0, 0))
+        # self.screen.blit(pygame.image.load("images/Buttons/Effects/Main/"), (355, 620))
+        self.draw_buttons()
         pygame.display.update()

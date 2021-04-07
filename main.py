@@ -5,10 +5,10 @@ import link_functions as lf
 # Generic game class that takes some parameters and creates a screen and a dictionary of string keys and
 # function values. The keys are a returned value that depends on the link_function in use (see more in the module:
 # link_functions). Basically this class just creates the connection between the different menus, functionalities, (...).
-class Game:
+class Program:
     link_function_dict: dict
 
-    def __init__(self, screen_width, screen_length, screen_lable, link_functions):
+    def __init__(self, screen_length, screen_width, screen_lable, link_functions):
         self.screen = None
         self.link_function_dict = link_functions
         self.previous_link = None
@@ -34,6 +34,8 @@ class Game:
 
 pygame.init()
 # this dictionary has string keys and the corresponding function values.
-links = {"initial": lf.start_page, "exit1": lf.exit_program, "main_menu": lf.main_menu, "tutorial": lf.tutorial}
-PE_HELPER = Game(750, 1150, "Statistics Helper", links)  # create the software class
+links = {"initial": lf.start_page, "exit1": lf.exit_program, "main_menu": lf.main_menu, "tutorial": lf.tutorial,
+         "new_table": lf.create_table, "create": lf.display_table}
+PE_HELPER = Program(1150, 750, "Statistics Helper", links)  # create the software class
 PE_HELPER.start("initial")  # start the software window
+pygame.quit()
