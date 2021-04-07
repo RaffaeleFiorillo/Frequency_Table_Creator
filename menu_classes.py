@@ -36,6 +36,32 @@ class Button:
         self.image = pygame.image.load(directory)
 
 
+class Text_Box:
+    text = ""
+
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+    def draw_box(self, screen):
+        adjust, precision= 0, 15
+        unity = 255//precision
+        for i in range(precision):
+            rgb = unity*i
+            color, x, y = (rgb, rgb, rgb), self.x+adjust, self.y+adjust
+            w, h = self.width-adjust*2, self.height-adjust*2
+            pygame.draw.rect(screen, color, (x, y, w, h), 7-i, 1, 1)
+            adjust += 6-i
+
+    def draw(self, screen):
+        self.draw_box(screen)
+
+    def update(self):
+        pass
+
+
 # ------------------------------------------------- MENU CLASSES -------------------------------------------------------
 # Used for "Story", and every Tutorial option
 class Menu_image_sequence:
@@ -275,6 +301,7 @@ class Table_Creator:
         self.image_nome = pygame.image.load("images/Menu/table_creator_menu.png")
         self.effect = [pygame.image.load(f"images/Buttons/Effects/Main/{i+1}.png") for i in range(4)]
         self.active_code = 0
+        self.text_box = Text_Box(275, 50, 600, 300)
         self.screen = screen
         self.current_frame = 0
         self.coord_effect = (self.internal_list[0].x-12, self.internal_list[0].y-12)
@@ -324,6 +351,7 @@ class Table_Creator:
     def refresh(self, background):
         self.screen.blit(background, (0, 0))
         self.screen.blit(self.image_nome, (0, 0))
+        self.text_box.draw(self.screen)
         # self.screen.blit(pygame.image.load("images/Buttons/Effects/Main/"), (355, 620))
         self.draw_buttons()
         pygame.display.update()

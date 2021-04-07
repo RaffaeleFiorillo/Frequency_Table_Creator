@@ -37,5 +37,5 @@ pygame.init()
 links = {"initial": lf.start_page, "exit1": lf.exit_program, "main_menu": lf.main_menu, "tutorial": lf.tutorial,
          "new_table": lf.create_table, "create": lf.display_table}
 PE_HELPER = Program(1150, 750, "Statistics Helper", links)  # create the software class
-PE_HELPER.start("initial")  # start the software window
+PE_HELPER.start("new_table")  # start the software window
 pygame.quit()
