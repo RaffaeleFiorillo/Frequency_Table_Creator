@@ -124,8 +124,12 @@ def clean_screen():
         system("cls")
 
 
+def get_elements(text):
+    return [elem for elem in text if elem != ""]
+
+
 def render_texts(text):
-    text = text.split(" ")
+    text = get_elements(text.split(" "))
     lines = [""]
     for element in text:
         line_plus_element = lines[-1] + element
@@ -135,4 +139,10 @@ def render_texts(text):
             lines[-1]= lines[-1].strip()
             lines.append(element.strip()+" ")
     rendered_lines = [create_sized_text(700, 20, line, (255, 255, 255), 15) for line in lines]
-    return rendered_lines, len(text)
+    elements = get_elements(text)
+    return rendered_lines, elements
+
+
+"""values = ["1", " ", "2", " ", "3", " ", "4", " ", "5", " ", "6", " ", "7", " ", "8", " ", "9"]
+text = "".join([choice(values) for _ in range(200)])
+print(render_texts(text))"""

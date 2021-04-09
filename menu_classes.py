@@ -40,6 +40,7 @@ class Text_Box:
     text = ""
     last_character = ""
     elements_number = 0
+    elements = []
 
     def __init__(self, x, y, width, height):
         self.x = x
@@ -58,7 +59,8 @@ class Text_Box:
             adjust += 6-i
 
     def display_text(self, screen):
-        rendered_texts, self.elements_number = f.render_texts(self.text)
+        rendered_texts, self.elements = f.render_texts(self.text)
+        self.elements_number = len(self.elements)
         coordinates = [(self.x + 30, self.y+30 + i * 30) for i in range(len(rendered_texts))]
         for text, coo in zip(rendered_texts, coordinates):
             screen.blit(text, coo)
@@ -353,8 +355,11 @@ class Table_Creator:
         elif event.unicode.isdigit() or event.unicode == " ":
             if self.text_box.last_character != " ":
                 self.text_box.text += event.unicode
-            else:
                 self.text_box.last_character = event.unicode
+            else:
+                if event.unicode != " ":
+                    self.text_box.text += event.unicode
+                    self.text_box.last_character = event.unicode
 
         self.active_code += valor
         if self.active_code > len(self.internal_list)-1:
@@ -363,10 +368,15 @@ class Table_Creator:
             self.active_code = len(self.internal_list)-1
         self.coord_effect = (self.internal_list[self.active_code].x-12, self.internal_list[self.active_code].y-12)
 
+    def display_info(self):
+        text = f"Current element number: {self.text_box.elements_number}"
+        image_text = f.create_sized_text(100, 30, text, (0, 0, 0), 20)
+        self.screen.blit(image_text, (450, 400))
+
     def refresh(self, background):
         self.screen.blit(background, (0, 0))
         self.screen.blit(self.image_nome, (0, 0))
         self.text_box.draw(self.screen)
-        # self.screen.blit(pygame.image.load("images/Buttons/Effects/Main/"), (355, 620))
+        self.display_info()
         self.draw_buttons()
         pygame.display.update()
