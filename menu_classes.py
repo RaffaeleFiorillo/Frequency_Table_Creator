@@ -130,7 +130,7 @@ class Menu_image_sequence:
         clock = pygame.time.Clock()
         keepGoing = True
         while keepGoing:
-            clock.tick(60)
+            clock.tick(30)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return False
@@ -172,7 +172,7 @@ class Menu:
         clock = pygame.time.Clock()
         keepGoing = True
         while keepGoing:
-            clock.tick(60)
+            clock.tick(30)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return False
@@ -236,7 +236,7 @@ class Exit:
         clock = pygame.time.Clock()
         keepGoing = True
         while keepGoing:
-            clock.tick(60)
+            clock.tick(30)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     f.terminate_execution()
@@ -289,7 +289,7 @@ class Start:
         clock = pygame.time.Clock()
         keepGoing = True
         while keepGoing:
-            self.time += clock.tick(60) / 990
+            self.time += clock.tick(30) / 990
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return False
@@ -329,7 +329,7 @@ class Table_Creator:
         clock = pygame.time.Clock()
         keepGoing = True
         while keepGoing:
-            clock.tick(60)
+            clock.tick(30)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return False
