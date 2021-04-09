@@ -38,6 +38,8 @@ class Button:
 
 class Text_Box:
     text = ""
+    last_character = ""
+    elements_number = 0
 
     def __init__(self, x, y, width, height):
         self.x = x
@@ -45,7 +47,7 @@ class Text_Box:
         self.width = width
         self.height = height
 
-    def draw_box(self, screen):
+    def display_box(self, screen):
         adjust, precision= 0, 15
         unity = 255//precision
         for i in range(precision):
@@ -55,11 +57,15 @@ class Text_Box:
             pygame.draw.rect(screen, color, (x, y, w, h), 7-i, 1, 1)
             adjust += 6-i
 
-    def draw(self, screen):
-        self.draw_box(screen)
+    def display_text(self, screen):
+        rendered_texts, self.elements_number = f.render_texts(self.text)
+        coordinates = [(self.x + 30, self.y+30 + i * 30) for i in range(len(rendered_texts))]
+        for text, coo in zip(rendered_texts, coordinates):
+            screen.blit(text, coo)
 
-    def update(self):
-        pass
+    def draw(self, screen):
+        self.display_box(screen)
+        self.display_text(screen)
 
 
 # ------------------------------------------------- MENU CLASSES -------------------------------------------------------
@@ -301,7 +307,7 @@ class Table_Creator:
         self.image_nome = pygame.image.load("images/Menu/table_creator_menu.png")
         self.effect = [pygame.image.load(f"images/Buttons/Effects/Main/{i+1}.png") for i in range(4)]
         self.active_code = 0
-        self.text_box = Text_Box(275, 50, 600, 300)
+        self.text_box = Text_Box(200, 50, 760, 300)
         self.screen = screen
         self.current_frame = 0
         self.coord_effect = (self.internal_list[0].x-12, self.internal_list[0].y-12)
@@ -326,12 +332,12 @@ class Table_Creator:
                 if event.type == pygame.QUIT:
                     return False
                 if event.type == pygame.KEYDOWN:
-                    effect = self.manage_buttons(pygame.key.get_pressed())
+                    effect = self.manage_buttons(pygame.key.get_pressed(), event)
                     if effect is not None:
                         return effect
             self.refresh(background)
 
-    def manage_buttons(self, keys):
+    def manage_buttons(self, keys, event):
         valor = 0
         if keys[pygame.K_UP]:
             # f.play(button_y_sound)
@@ -341,6 +347,15 @@ class Table_Creator:
             valor = 1
         elif keys[pygame.K_KP_ENTER] or keys[pygame.K_RETURN]:
             return self.internal_list[self.active_code].effect
+        if event.key == pygame.K_BACKSPACE:
+            # f.play(erase_letter_sound)
+            self.text_box.text = self.text_box.text[:-1]
+        elif event.unicode.isdigit() or event.unicode == " ":
+            if self.text_box.last_character != " ":
+                self.text_box.text += event.unicode
+            else:
+                self.text_box.last_character = event.unicode
+
         self.active_code += valor
         if self.active_code > len(self.internal_list)-1:
             self.active_code = 0
