@@ -48,20 +48,23 @@ class Text_Box:
         self.width = width
         self.height = height
 
+    def __str__(self):
+        return " ".join(self.elements)
+
     def display_box(self, screen):
-        adjust, precision= 0, 15
-        unity = 255//precision
+        adjust, precision = 0, 15
+        unity = 255 // precision
         for i in range(precision):
-            rgb = unity*i
-            color, x, y = (rgb, rgb, rgb), self.x+adjust, self.y+adjust
-            w, h = self.width-adjust*2, self.height-adjust*2
-            pygame.draw.rect(screen, color, (x, y, w, h), 7-i, 1, 1)
-            adjust += 6-i
+            rgb = unity * i
+            color, x, y = (rgb, rgb, rgb), self.x + adjust, self.y + adjust
+            w, h = self.width - adjust * 2, self.height - adjust * 2
+            pygame.draw.rect(screen, color, (x, y, w, h), 7 - i, 1, 1)
+            adjust += 6 - i
 
     def display_text(self, screen):
         rendered_texts, self.elements = f.render_texts(self.text)
         self.elements_number = len(self.elements)
-        coordinates = [(self.x + 30, self.y+30 + i * 30) for i in range(len(rendered_texts))]
+        coordinates = [(self.x + 30, self.y + 30 + i * 30) for i in range(len(rendered_texts))]
         for text, coo in zip(rendered_texts, coordinates):
             screen.blit(text, coo)
 
@@ -77,7 +80,7 @@ class Menu_image_sequence:
         self.screen = screen
         self.name = name
         self.background_image = pygame.image.load("images/menu/interfaces/Main/sequence.png")
-        self.images_list = [pygame.image.load(f"images/slides/{pasta}/{i+1}.png") for i in range(num_pages)]
+        self.images_list = [pygame.image.load(f"images/slides/{pasta}/{i + 1}.png") for i in range(num_pages)]
         self.slide_name = pygame.image.load(f"images/slides/{pasta}/name.png")
         self.num_pages = num_pages
         self.current_page = 0
@@ -101,13 +104,13 @@ class Menu_image_sequence:
                 return self.origin_link
         elif keys[pygame.K_ESCAPE]:
             return self.origin_link
-        if self.current_page > self.num_pages-1:
-            self.current_page = self.num_pages-1
+        if self.current_page > self.num_pages - 1:
+            self.current_page = self.num_pages - 1
         if self.current_page < 0:
             self.current_page = 0
 
     def get_rectangle(self):
-        if self.current_page == self.num_pages-1:
+        if self.current_page == self.num_pages - 1:
             return 700, 633, 300, 40
         elif self.current_page == 0:
             return 85, 633, 300, 40
@@ -115,7 +118,7 @@ class Menu_image_sequence:
             return 200, 640, 1, 1
 
     def write_page_number(self):
-        page_image = f.create_sized_text(20, 50, str(self.current_page+1), (255, 255, 255))
+        page_image = f.create_sized_text(20, 50, str(self.current_page + 1), (255, 255, 255))
         self.screen.blit(page_image, (515, 640))
 
     def refresh(self):
@@ -148,11 +151,11 @@ class Menu:
         self.directory = directory
         self.name = self.directory.split("/")[-1][:-4]
         self.image_nome = pygame.image.load(directory)
-        self.effect = [pygame.image.load(f"images/Buttons/Effects/Main/{i+1}.png") for i in range(4)]
+        self.effect = [pygame.image.load(f"images/Buttons/Effects/Main/{i + 1}.png") for i in range(4)]
         self.active_code = 0
         self.screen = screen
         self.current_frame = 0
-        self.coord_effect = (self.internal_list[0].x-12, self.internal_list[0].y-12)
+        self.coord_effect = (self.internal_list[0].x - 12, self.internal_list[0].y - 12)
 
     def draw_buttons(self):
         # coordinates = {0: (680, 90), 1: (698, 192), 2: (685, 178)}
@@ -193,11 +196,11 @@ class Menu:
         elif keys[pygame.K_KP_ENTER] or keys[pygame.K_RETURN]:
             return self.internal_list[self.active_code].effect
         self.active_code += valor
-        if self.active_code > len(self.internal_list)-1:
+        if self.active_code > len(self.internal_list) - 1:
             self.active_code = 0
         if self.active_code < 0:
-            self.active_code = len(self.internal_list)-1
-        self.coord_effect = (self.internal_list[self.active_code].x-12, self.internal_list[self.active_code].y-12)
+            self.active_code = len(self.internal_list) - 1
+        self.coord_effect = (self.internal_list[self.active_code].x - 12, self.internal_list[self.active_code].y - 12)
 
     def refresh(self, background):
         self.screen.blit(background, (0, 0))
@@ -212,7 +215,7 @@ class Exit:
     def __init__(self, directory, screen):
         self.image_nome = pygame.image.load(directory)
         self.effects = (True, False)
-        self.effect = [pygame.image.load(f"images/Buttons/Effects/Exit/{i+1}.png") for i in range(4)]
+        self.effect = [pygame.image.load(f"images/Buttons/Effects/Exit/{i + 1}.png") for i in range(4)]
         self.yes_button_image = pygame.image.load(f"images/Buttons/Exit/1.png")
         self.no_button_image = pygame.image.load(f"images/Buttons/Exit/2.png")
         self.active_code = 0
@@ -223,7 +226,7 @@ class Exit:
         coordinates = {0: (265, 410), 1: (595, 410)}
         coo = coordinates[self.active_code]
         self.screen.blit(self.effect[int(self.current_frame)], coo)
-        self.screen.blit(self.yes_button_image, (coordinates[0][0]+13, coordinates[0][1]+10))
+        self.screen.blit(self.yes_button_image, (coordinates[0][0] + 13, coordinates[0][1] + 10))
         self.screen.blit(self.no_button_image, (coordinates[1][0] + 13, coordinates[1][1] + 10))
         self.current_frame += 0.25
         if self.current_frame > 3:
@@ -257,7 +260,7 @@ class Exit:
         elif keys[pygame.K_KP_ENTER] or keys[pygame.K_RETURN]:
             return self.effects[self.active_code]
         self.active_code += valor
-        if self.active_code > len(self.effects)-1:
+        if self.active_code > len(self.effects) - 1:
             self.active_code = 0
         if self.active_code < 0:
             self.active_code = 1
@@ -304,18 +307,26 @@ class Start:
 
 
 class Table_Creator:
+    effect = []
+    current_frame = 0
+    image_name = pygame.image.load("images/Menu/table_creator_menu.png")
+    active_code = 0
+    text_box = Text_Box(200, 50, 760, 300)
+    info_text_image = f.create_sized_text(100, 21, "You can start typing the sample. It will be shown in this box.",
+                                          (0, 0, 0), 20)
+
     def __init__(self, buttons, screen):
         self.internal_list = buttons
-        self.image_nome = pygame.image.load("images/Menu/table_creator_menu.png")
-        self.effect = [pygame.image.load(f"images/Buttons/Effects/Main/{i+1}.png") for i in range(4)]
-        self.active_code = 0
-        self.text_box = Text_Box(200, 50, 760, 300)
         self.screen = screen
-        self.current_frame = 0
-        self.coord_effect = (self.internal_list[0].x-12, self.internal_list[0].y-12)
+        self.coord_effect = (self.internal_list[0].x - 12, self.internal_list[0].y - 12)
+        self.effect.append([pygame.image.load(f"images/Buttons/Effects/Main/{i + 1}.png") for i in range(4)])
+        self.effect.append([pygame.image.load(f"images/Buttons/Effects/Other/{i + 1}.png") for i in range(4)])
 
     def draw_buttons(self):
-        self.screen.blit(self.effect[int(self.current_frame)], self.coord_effect)
+        effect_code = 0
+        if self.active_code == 2:
+            effect_code = 1
+        self.screen.blit(self.effect[effect_code][int(self.current_frame)], self.coord_effect)
         for button in self.internal_list:
             button.draw(self.screen)
         self.current_frame += 0.25
@@ -336,8 +347,15 @@ class Table_Creator:
                 if event.type == pygame.KEYDOWN:
                     effect = self.manage_buttons(pygame.key.get_pressed(), event)
                     if effect is not None:
+                        if effect == "create":
+                            self.save_data()
                         return effect
             self.refresh(background)
+
+    def save_data(self):
+        file = open("data.txt", "w")
+        file.write(str(self.text_box))
+        file.close()
 
     def manage_buttons(self, keys, event):
         valor = 0
@@ -362,20 +380,22 @@ class Table_Creator:
                     self.text_box.last_character = event.unicode
 
         self.active_code += valor
-        if self.active_code > len(self.internal_list)-1:
+        if self.active_code > len(self.internal_list) - 1:
             self.active_code = 0
         if self.active_code < 0:
-            self.active_code = len(self.internal_list)-1
-        self.coord_effect = (self.internal_list[self.active_code].x-12, self.internal_list[self.active_code].y-12)
+            self.active_code = len(self.internal_list) - 1
+        self.coord_effect = (self.internal_list[self.active_code].x - 12, self.internal_list[self.active_code].y - 12)
 
     def display_info(self):
         text = f"Current element number: {self.text_box.elements_number}"
-        image_text = f.create_sized_text(100, 30, text, (0, 0, 0), 20)
-        self.screen.blit(image_text, (450, 400))
+        image_text = f.create_sized_text(250, 21, text, (0, 0, 0), 20)
+        self.screen.blit(image_text, (445, 400))
+        if not self.text_box.elements_number:
+            self.screen.blit(self.info_text_image, (270, 200))
 
     def refresh(self, background):
         self.screen.blit(background, (0, 0))
-        self.screen.blit(self.image_nome, (0, 0))
+        self.screen.blit(self.image_name, (0, 0))
         self.text_box.draw(self.screen)
         self.display_info()
         self.draw_buttons()

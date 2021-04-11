@@ -35,7 +35,7 @@ class Program:
 pygame.init()
 # this dictionary has string keys and the corresponding function values.
 links = {"initial": lf.start_page, "exit1": lf.exit_program, "main_menu": lf.main_menu, "tutorial": lf.tutorial,
-         "new_table": lf.create_table, "create": lf.display_table}
+         "new_table": lf.create_table, "create1": lf.display_table_standard, "create2": lf.display_table_custom}
 PE_HELPER = Program(1150, 750, "Statistics Helper", links)  # create the software class
 PE_HELPER.start("new_table")  # start the software window
 pygame.quit()

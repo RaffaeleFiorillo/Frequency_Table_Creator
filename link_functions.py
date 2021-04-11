@@ -7,6 +7,7 @@
 
 # -------------------------------------------- IMPORTS -----------------------------------------------------------------
 import menu_classes as mc
+import hard_work as hw
 import functions as f
 
 
@@ -40,17 +41,32 @@ def tutorial():
     pass
 
 
-def display_table():
-    pass
+def display_table_standard(screen):
+    hw.do_the_work_standard()
+    data = f.prepare_table_data_standard()
+    for line in data:
+        print(line)
+    # td = Table_Displayer(screen, data)
+    # td.display_menu()
+    return "new_table"
+
+
+def display_table_custom(screen):
+    # hw.do_the_work_customized()
+    # here you create all the initialization values for the class that will display the table
+    f.wait(1)
+    return "new_table"
 
 
 def create_table(screen):
-    exit_button = mc.Button(995, 675, "images/Buttons/Create_Table/exit.png", "exit_2", 2)
-    create_button = mc.Button((1150 - 260) // 2, 500, "images/Buttons/Create_Table/create.png", "create", 1)
-    buttons_tc = [create_button, exit_button]
+    x_value = (1150 - 260) // 2
+    exit_button = mc.Button(x_value+55, 650, "images/Buttons/Create_Table/exit.png", "exit1", 3)
+    create_button2 = mc.Button(x_value, 550, "images/Buttons/Create_Table/create_2.png", "create2", 2)
+    create_button1 = mc.Button(x_value, 450, "images/Buttons/Create_Table/create_1.png", "create1", 1)
+    buttons_tc = [create_button1, create_button2, exit_button]
     tc = mc.Table_Creator(buttons_tc, screen)
-    tc.display_menu()
-    return "main_menu"
+    next_link = tc.display_menu()
+    return next_link
 
 
 # activated when a user wants to exit the program, leads to finish the program's execution or Main Menu

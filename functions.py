@@ -143,6 +143,14 @@ def render_texts(text):
     return rendered_lines, elements
 
 
+def prepare_table_data_standard():
+    with open("data.txt", "r") as file:
+        data = file.readlines()
+    line1 = map(int, data[0].split(" "))
+    line2 = data[1].split(" ")
+    # YOU ARE HERE
+
+
 """values = ["1", " ", "2", " ", "3", " ", "4", " ", "5", " ", "6", " ", "7", " ", "8", " ", "9"]
 text = "".join([choice(values) for _ in range(200)])
 print(render_texts(text))"""

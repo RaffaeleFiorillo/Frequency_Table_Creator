@@ -74,13 +74,6 @@ def relative_frequency(freq_abs, num_elem):
     return [simplifies(freq, num_elem) for freq in freq_abs]
 
 
-"""def relative_frequency_percentage(freq_rel):
-    lines = []
-    for f in freq_rel:
-        lines.append((f[0] / f[1] * 100) * 1000 // 1 / 1000)
-    return lines"""
-
-
 # Returns a list. Each element represents the value of the relative frequency percentage
 # for the corresponding line of the table
 def relative_frequency_percentage(freq_rel):
@@ -135,6 +128,14 @@ def display_table(columns):
         print(line)
 
 
+def write_table_content(content):
+    with open("data.txt", "a") as file:
+        for i in range(len(content[0])):
+            for column in content:
+                file.write(f"{column[i]} ")
+            file.write("\n")
+
+
 # Calculates the number of classes that will be created for the given sample
 def get_classes_number(rol_inside):
     n = len(rol_inside)
@@ -167,8 +168,9 @@ def get_desvio_padrao(media_inside, rol_inside, tamanho_inside):
     return value
 
 
-def do_the_work():
-    my_list = input("Cole aqui a string que contem os valores: \n")
+def do_the_work_customized():
+    with open("data.txt", "r") as file:
+        my_list = file.readline()
     escolha = input("deseja especificar o tamanho das classes? (y/n): ")
     rol = get_rol_inside(my_list)
     amplitude_total = rol[-1] - rol[0]
@@ -191,7 +193,7 @@ def do_the_work():
     fr_rel_perc = relative_frequency_percentage(fr_rel)
     fr_acum = cumulative_frequency(fr_abs)
     fr_acum_perc = cumulative_frequency_percentage(fr_acum)
-    media = (sum(rol) / len(rol)) * 10000 // 1 / 10000
+    media = round(sum(rol) / len(rol), 4)
     moda = intervalos[get_mode(fr_abs)]
     mediana = get_median(rol)
     desvio_padrao = get_desvio_padrao(media, rol, tamanho)
@@ -212,13 +214,29 @@ def do_the_work():
     display_table([intervalos, fr_abs, fr_rel, fr_rel_perc, fr_acum, fr_acum_perc])
 
 
-while True:
-    do_the_work()
-    print("\n  ^\n  |\nYOUR RESULTS ARE UP HERE\n\nWhat do you want to do Next?"
-          "\n  -> Exit (Current results will be erased): n"
-          "\n  -> Insert another sample: y")
-    choice = input("\n Your choice: ")
-    if choice == "y":
-        continue
-    else:
-        break
+def do_the_work_standard():
+    with open("data.txt", "r") as file:
+        my_list = file.readline()
+    rol = get_rol_inside(my_list)
+    amplitude_total = rol[-1] - rol[0]
+    num_classes = get_classes_number(rol)
+    amplitude_classe = amplitude_total / num_classes
+    if amplitude_classe // 1 != amplitude_classe:
+        amplitude_classe = int(amplitude_classe // 1 + 1)
+    tamanho = len(rol)
+    freq = get_frequency(rol)
+    intervalos = get_intervals(freq, amplitude_classe, max(rol))
+    fr_abs = absolute_frequency(intervalos, freq, rol[-1])
+    fr_rel = relative_frequency(fr_abs, len(rol))
+    fr_rel_perc = relative_frequency_percentage(fr_rel)
+    fr_acum = cumulative_frequency(fr_abs)
+    fr_acum_perc = cumulative_frequency_percentage(fr_acum)
+    media = round(sum(rol) / len(rol), 4)
+    moda = intervalos[get_mode(fr_abs)]
+    mediana = get_median(rol)
+    desvio_padrao = get_desvio_padrao(media, rol, tamanho)
+    varianca = desvio_padrao ** 2
+    with open("data.txt", "w") as file:
+        file.write(f"{' '.join(map(str, rol))} \n{amplitude_total} {int(amplitude_classe)} {tamanho} {num_classes}  {media}  "
+                   f"{moda} {mediana} {varianca} {desvio_padrao} \n")
+    write_table_content([intervalos, fr_abs, fr_rel, fr_rel_perc, fr_acum, fr_acum_perc])
