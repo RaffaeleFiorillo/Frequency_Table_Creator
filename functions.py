@@ -146,9 +146,10 @@ def render_texts(text):
 def prepare_table_data_standard():
     with open("data.txt", "r") as file:
         data = file.readlines()
-    line1 = map(int, data[0].split(" "))
-    line2 = data[1].split(" ")
-    # YOU ARE HERE
+    line1 = [int(dat) for dat in data[0].split(" ")[:-1] if dat != "" and dat != "\n"]
+    line2 = [dat for dat in data[1].split(" ")[:-1] if dat != ""]
+    table = [line.split(" ") for line in data[2:]]
+    return [line1, line2, table]
 
 
 """values = ["1", " ", "2", " ", "3", " ", "4", " ", "5", " ", "6", " ", "7", " ", "8", " ", "9"]
