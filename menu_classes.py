@@ -425,8 +425,11 @@ class Table_Display:
         self.screen.blit(self.image_name, (0, 0))
         # self.display_titles()
         self.screen.blit(self.line1, (30, 60))
+        pygame.draw.line(self.screen, (100, 100, 100), (25, 83), (1125, 83), 2)
         self.screen.blit(self.line2[0], (30, 90))
+        pygame.draw.line(self.screen, (100, 100, 100), (25, 113), (1125, 113), 2)
         self.screen.blit(self.line2[1], (30, 115))
+        pygame.draw.line(self.screen, (100, 100, 100), (25, 140), (1125, 140), 2)
         """for line, coo in zip(self.table, self.coordinates):
             self.screen.blit(line, coo)
         self.screen.blit(self.info_text_image, (440, 680))"""

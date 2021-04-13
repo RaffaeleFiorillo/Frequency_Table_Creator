@@ -163,9 +163,9 @@ def create_line_2_image(line2):
         if i not in [5, 6]:
             new_line.append(line2[i])
         elif i == 5:
-            new_line.append(line2[5][1:]+line2[6][:-1])
+            new_line.append(f"{line2[5][1:-1]} |- {line2[6][:-1]}")
     line2_1, line2_2 = new_line[:4], new_line[4:]
-    elements = ["Total Amplitude", "Class Amplitude", "Sample Size", "Class Number", "Media", "Mode", "Median",
+    elements = ["Total Amplitude", "Class Amplitude", "Sample Size", "Class Number", "Media", "Mode Class", "Median",
                 "Variance", "Standard Deviation"]
     content1 = [f"{elements[i]}: {line2_1[i]} | " for i in range(len(line2_1))]
     content2 = [f"{elements[i+4]}: {line2_2[i]} | " for i in range(len(line2_2))]
