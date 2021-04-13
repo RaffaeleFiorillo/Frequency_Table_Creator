@@ -153,8 +153,8 @@ def prepare_table_data_standard():
 
 
 def create_line_1_image(line1):
-    new_line = "Rol of the sample: " + " ".join(line1)
-    return create_sized_text(1000, 21, new_line, (255, 255, 255), 12)
+    new_line = "Rol of the sample: " + "; ".join(line1)
+    return create_sized_text(1100, 21, new_line, (255, 255, 255), 12)
 
 
 """values = ["1", " ", "2", " ", "3", " ", "4", " ", "5", " ", "6", " ", "7", " ", "8", " ", "9"]

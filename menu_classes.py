@@ -406,8 +406,8 @@ class Table_Display:
     def __init__(self, screen, data):
         self.screen = screen
         self.line1 = f.create_line_1_image(data[0])
-        self.line2 = f.create_line_2_image(data[1])
-        self.table = f.create_table_images(data[2])
+        #self.line2 = f.create_line_2_image(data[1])
+        #self.table = f.create_table_images(data[2])
 
     def display_menu(self):
         clock = pygame.time.Clock()
@@ -423,9 +423,10 @@ class Table_Display:
 
     def refresh(self):
         self.screen.blit(self.image_name, (0, 0))
-        self.screen.blit(self.line1)
-        self.screen.blit(self.line2)
-        for line, coo in zip(self.table, self.coordinates):
+        # self.display_titles()
+        self.screen.blit(self.line1, (30, 60))
+        # self.screen.blit(self.line2)
+        """for line, coo in zip(self.table, self.coordinates):
             self.screen.blit(line, coo)
-        self.screen.blit(self.info_text_image, (440, 680))
+        self.screen.blit(self.info_text_image, (440, 680))"""
         pygame.display.update()
