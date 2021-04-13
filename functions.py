@@ -154,7 +154,22 @@ def prepare_table_data_standard():
 
 def create_line_1_image(line1):
     new_line = "Rol of the sample: " + "; ".join(line1)
-    return create_sized_text(1100, 21, new_line, (255, 255, 255), 12)
+    return create_sized_text(1100, 21, new_line, (0, 0, 0), 12)
+
+
+def create_line_2_image(line2):
+    new_line = []
+    for i in range(len(line2)):
+        if i not in [5, 6]:
+            new_line.append(line2[i])
+        elif i == 5:
+            new_line.append(line2[5][1:]+line2[6][:-1])
+    line2 = new_line
+    elements = ["Total Amplitude", "Class Amplitude", "Sample Size", "Class Number", "Media", "Mode", "Median",
+                "Variance", "Standard Deviation"]
+    content = [f"{elements[i]}: {line2[i]} | " for i in range(len(line2))]
+    content2 = create_sized_text(1100, 21, "".join(content), (0, 0, 0), 12)
+    return content2
 
 
 """values = ["1", " ", "2", " ", "3", " ", "4", " ", "5", " ", "6", " ", "7", " ", "8", " ", "9"]

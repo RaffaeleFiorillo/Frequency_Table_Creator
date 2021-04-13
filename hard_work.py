@@ -238,5 +238,5 @@ def do_the_work_standard():
     varianca = desvio_padrao ** 2
     with open("data.txt", "w") as file:
         file.write(f"{' '.join(map(str, rol))} \n{amplitude_total} {int(amplitude_classe)} {tamanho} {num_classes}  {media}  "
-                   f"{moda} {mediana} {varianca} {desvio_padrao} \n")
+                   f"{moda} {mediana} {round(varianca, 4)} {round(desvio_padrao, 4)} \n")
     write_table_content([intervalos, fr_abs, fr_rel, fr_rel_perc, fr_acum, fr_acum_perc])
