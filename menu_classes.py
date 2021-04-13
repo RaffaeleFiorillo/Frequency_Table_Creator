@@ -334,9 +334,6 @@ class Table_Creator:
             self.current_frame = 0
 
     def display_menu(self):
-        background = pygame.Surface(self.screen.get_size())
-        background = background.convert()
-        background.fill((0, 0, 0))
         clock = pygame.time.Clock()
         keepGoing = True
         while keepGoing:
@@ -350,7 +347,7 @@ class Table_Creator:
                         if effect == "create":
                             self.save_data()
                         return effect
-            self.refresh(background)
+            self.refresh()
 
     def save_data(self):
         file = open("data.txt", "w")
@@ -393,10 +390,42 @@ class Table_Creator:
         if not self.text_box.elements_number:
             self.screen.blit(self.info_text_image, (270, 200))
 
-    def refresh(self, background):
-        self.screen.blit(background, (0, 0))
+    def refresh(self):
         self.screen.blit(self.image_name, (0, 0))
         self.text_box.draw(self.screen)
         self.display_info()
         self.draw_buttons()
+        pygame.display.update()
+
+
+class Table_Display:
+    info_text_image = f.create_sized_text(100, 21, "Press any button to continue", (0, 0, 0), 20)
+    image_name = pygame.image.load("images/Menu/table_creator_menu.png")
+    coordinates = []
+
+    def __init__(self, screen, data):
+        self.screen = screen
+        self.line1 = f.create_line_1_image(data[0])
+        self.line2 = f.create_line_2_image(data[1])
+        self.table = f.create_table_images(data[2])
+
+    def display_menu(self):
+        clock = pygame.time.Clock()
+        keepGoing = True
+        while keepGoing:
+            clock.tick(30)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return False
+                if event.type == pygame.KEYDOWN:
+                    return "new_table"
+            self.refresh()
+
+    def refresh(self):
+        self.screen.blit(self.image_name, (0, 0))
+        self.screen.blit(self.line1)
+        self.screen.blit(self.line2)
+        for line, coo in zip(self.table, self.coordinates):
+            self.screen.blit(line, coo)
+        self.screen.blit(self.info_text_image, (440, 680))
         pygame.display.update()

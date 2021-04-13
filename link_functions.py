@@ -44,10 +44,8 @@ def tutorial():
 def display_table_standard(screen):
     hw.do_the_work_standard()
     data = f.prepare_table_data_standard()
-    for line in data:
-        print(line)
-    # td = Table_Displayer(screen, data)
-    # td.display_menu()
+    td = mc.Table_Display(screen, data)
+    td.display_menu()
     return "new_table"
 
 
