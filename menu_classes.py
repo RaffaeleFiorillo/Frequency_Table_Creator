@@ -425,7 +425,8 @@ class Table_Display:
         self.screen.blit(self.image_name, (0, 0))
         # self.display_titles()
         self.screen.blit(self.line1, (30, 60))
-        self.screen.blit(self.line2, (30, 80))
+        self.screen.blit(self.line2[0], (30, 90))
+        self.screen.blit(self.line2[1], (30, 115))
         """for line, coo in zip(self.table, self.coordinates):
             self.screen.blit(line, coo)
         self.screen.blit(self.info_text_image, (440, 680))"""

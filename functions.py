@@ -164,12 +164,14 @@ def create_line_2_image(line2):
             new_line.append(line2[i])
         elif i == 5:
             new_line.append(line2[5][1:]+line2[6][:-1])
-    line2 = new_line
+    line2_1, line2_2 = new_line[:4], new_line[4:]
     elements = ["Total Amplitude", "Class Amplitude", "Sample Size", "Class Number", "Media", "Mode", "Median",
                 "Variance", "Standard Deviation"]
-    content = [f"{elements[i]}: {line2[i]} | " for i in range(len(line2))]
-    content2 = create_sized_text(1100, 21, "".join(content), (0, 0, 0), 12)
-    return content2
+    content1 = [f"{elements[i]}: {line2_1[i]} | " for i in range(len(line2_1))]
+    content2 = [f"{elements[i+4]}: {line2_2[i]} | " for i in range(len(line2_2))]
+    content1 = create_sized_text(1100, 21, "".join(content1), (0, 0, 0), 12)
+    content2 = create_sized_text(1100, 21, "".join(content2), (0, 0, 0), 12)
+    return content1, content2
 
 
 """values = ["1", " ", "2", " ", "3", " ", "4", " ", "5", " ", "6", " ", "7", " ", "8", " ", "9"]
