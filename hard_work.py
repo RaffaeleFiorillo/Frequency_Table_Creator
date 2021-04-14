@@ -4,11 +4,11 @@ import functions as f
 # Simplifies a fraction
 def simplifies(num, denominator, fir=2):
     if num % denominator == 0:
-        return [num / denominator, 1]
+        return [int(num / denominator), 1]
     if num % fir == 0 and denominator % fir == 0:
         return simplifies(num / fir, denominator / fir, fir + 1)
     if fir == 20:
-        return [num, denominator]
+        return [int(num), int(denominator)]
     return simplifies(num, denominator, fir + 1)
 
 
