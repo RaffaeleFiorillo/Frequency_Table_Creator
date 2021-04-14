@@ -144,13 +144,22 @@ def get_classes_number(rol_inside):
 
 
 # Returns the index of the element that repeats the most
-def get_mode(freq_abs):
+def get_mode_class(freq_abs):
     biggest_frequency, index = 0, 0
     for freq in freq_abs:
         if freq > biggest_frequency:
             biggest_frequency = freq
             index = freq_abs.index(freq)
     return index
+
+
+def get_mode(roll):
+    mode, repetitions = None, 0
+    for element in roll:
+        elem_repet = roll.count(element)
+        if elem_repet > repetitions:
+            mode, repetitions = element, elem_repet
+    return mode
 
 
 # returns the median element (the one that divides the sample in half)
@@ -232,11 +241,12 @@ def do_the_work_standard():
     fr_acum = cumulative_frequency(fr_abs)
     fr_acum_perc = cumulative_frequency_percentage(fr_acum)
     media = round(sum(rol) / len(rol), 4)
-    moda = intervalos[get_mode(fr_abs)]
+    moda = get_mode(rol)
+    class_moda = intervalos[get_mode_class(fr_abs)]
     mediana = get_median(rol)
     desvio_padrao = get_desvio_padrao(media, rol, tamanho)
     varianca = desvio_padrao ** 2
     with open("data.txt", "w") as file:
-        file.write(f"{' '.join(map(str, rol))} \n{amplitude_total} {int(amplitude_classe)} {tamanho} {num_classes}  {media}  "
-                   f"{moda} {mediana} {round(varianca, 4)} {round(desvio_padrao, 4)} \n")
+        file.write(f"{' '.join(map(str, rol))} \n{amplitude_total} {int(amplitude_classe)} {tamanho} {num_classes}"
+                   f" {media} {moda} {class_moda} {mediana} {round(varianca, 4)} {round(desvio_padrao, 4)} \n")
     write_table_content([intervalos, fr_abs, fr_rel, fr_rel_perc, fr_acum, fr_acum_perc])
