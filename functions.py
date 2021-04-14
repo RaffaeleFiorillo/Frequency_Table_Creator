@@ -128,6 +128,31 @@ def get_elements(text):
     return [elem for elem in text if elem != ""]
 
 
+def reshape_into_class(part1, part2):
+    return f"{part1[1:-1]} |- {part2[:-1]}"
+
+
+def reshape_into_fraction(nominator, denominator):
+    return f"{nominator[1:-1]}/{denominator[:-1]}"
+
+
+def reshape_table_lines(table):
+    new_table = []
+    for line in table:
+        new_line = []
+        for i in range(len(line)):
+            if i == 0:
+                new_line.append(reshape_into_class(line[0], line[1]))
+            elif i in [1, 4, 8]:
+                continue
+            elif i == 3:
+                new_line.append(reshape_into_fraction(line[3], line[4]))
+            else:
+                new_line.append(line[i])
+        new_table.append(new_line)
+    return new_table
+
+
 def render_texts(text):
     text = get_elements(text.split(" "))
     lines = [""]
@@ -163,7 +188,7 @@ def create_line_2_image(line2):
         if i not in [6, 7]:
             new_line.append(line2[i])
         elif i == 6:
-            new_line.append(f"{line2[6][1:-1]} |- {line2[7][:-1]}")
+            new_line.append(reshape_into_class(line2[6], line2[7]))
     line2_1, line2_2 = new_line[:4], new_line[4:]
     elements = ["Total Amplitude", "Class Amplitude", "Sample Size", "Class Number", "Media", "Mode", "Mode Class",
                 "Median", "Variance", "Standard Deviation"]
@@ -174,6 +199,6 @@ def create_line_2_image(line2):
     return content1, content2
 
 
-"""values = ["1", " ", "2", " ", "3", " ", "4", " ", "5", " ", "6", " ", "7", " ", "8", " ", "9"]
-text = "".join([choice(values) for _ in range(200)])
-print(render_texts(text))"""
+def create_table_images(table):
+    table = reshape_table_lines(table)
+    [print(line) for line in table]

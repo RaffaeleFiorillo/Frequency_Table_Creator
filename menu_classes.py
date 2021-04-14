@@ -407,7 +407,7 @@ class Table_Display:
         self.screen = screen
         self.line1 = f.create_line_1_image(data[0])
         self.line2 = f.create_line_2_image(data[1])
-        #self.table = f.create_table_images(data[2])
+        self.table = f.create_table_images(data[2])
 
     def display_menu(self):
         clock = pygame.time.Clock()
