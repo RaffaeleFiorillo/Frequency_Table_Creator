@@ -216,3 +216,22 @@ def create_table_images(table):
     table = reshape_table_lines(table)
     columns_max_sizes, lines_images = get_table_line_images(table)
     return columns_max_sizes, lines_images
+
+
+def draw_table_lines(screen, lines_number, max_line_length):
+    color, s_x, s_y, advance = (0, 0, 0), 35, 160, 25
+    for _ in range(lines_number):
+        pygame.draw.line(screen, color, (s_x, s_y+advance), (s_x+max_line_length, s_y+advance), 1)
+
+
+def get_tables_lables():
+    words = ["   Class   ", "Absolute Frequency", "Relative Frequency", "Relative Frequency Percentage",
+             "Cumulative Frequency", "Cumulative Frequency Percentage"]
+    size_image, images, sizes = [], [], [110, 150, 150, 150, 200, 150, 200]
+    for word in words:
+        image = create_sized_text(sizes[words.index(word)], 20, f" {word} ", (0, 0, 0), 15)
+        images.append(image)
+        size_image.append(image.get_size())
+    return size_image, images
+
+

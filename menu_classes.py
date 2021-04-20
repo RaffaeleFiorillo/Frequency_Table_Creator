@@ -407,7 +407,7 @@ class Table_Display:
         self.screen = screen
         self.line1 = f.create_line_1_image(data[0])
         self.line2 = f.create_line_2_image(data[1])
-        self.table = f.create_table_images(data[2])
+        self.column_sizes, self.table = f.create_table_images(data[2])
 
     def display_menu(self):
         clock = pygame.time.Clock()
@@ -421,6 +421,22 @@ class Table_Display:
                     return "new_table"
             self.refresh()
 
+    def draw_table(self):
+        max_line_length = sum([element[0] for element in self.column_sizes])
+        for i in range(len(self.table)):
+            self.screen.blit(self.table[i], (35, 185+25*i))
+        f.draw_table_lines(self.screen, len(self.table), max_line_length)
+        # f.fill_table(self.table)
+
+    def draw_lable(self):
+        ss, aa = f.get_tables_lables()
+        pygame.draw.line(self.screen, (0, 0, 0), (20, 160), (1110, 160), 2)
+        x = 20
+        for s, a in zip(ss, aa):
+            self.screen.blit(a, (x, 160))
+            x+= s[0]
+        pygame.draw.line(self.screen, (0, 0, 0), (20, 185), (1110, 185), 2)
+
     def refresh(self):
         self.screen.blit(self.image_name, (0, 0))
         # self.display_titles()
@@ -430,7 +446,6 @@ class Table_Display:
         pygame.draw.line(self.screen, (100, 100, 100), (25, 113), (1125, 113), 2)
         self.screen.blit(self.line2[1], (30, 115))
         pygame.draw.line(self.screen, (100, 100, 100), (25, 140), (1125, 140), 2)
-        """for line, coo in zip(self.table, self.coordinates):
-            self.screen.blit(line, coo)
-        self.screen.blit(self.info_text_image, (440, 680))"""
+        self.draw_lable()
+        self.draw_table()
         pygame.display.update()
