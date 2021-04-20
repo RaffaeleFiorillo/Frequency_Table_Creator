@@ -168,6 +168,19 @@ def render_texts(text):
     return rendered_lines, elements
 
 
+def get_table_line_images(lines):
+    line_sizes, lines_images = [], []
+    for line in lines:
+        sizes = []
+        for element in line:
+            image = create_sized_text(50, 21, f" {element} ", (0, 0, 0), 18)
+            sizes.append(image.get_size())
+        lines_images.append(create_sized_text(50, 21, " "+"  ".join(line)+" ", (0, 0, 0), 20))
+        line_sizes.append(sizes)
+    columns_max_sizes = [max([line_sizes[i][y] for i in range(len(line_sizes[0]))]) for y in range(len(line_sizes))]
+    return columns_max_sizes, lines_images
+
+
 def prepare_table_data_standard():
     with open("data.txt", "r") as file:
         data = file.readlines()
@@ -201,4 +214,5 @@ def create_line_2_image(line2):
 
 def create_table_images(table):
     table = reshape_table_lines(table)
-    [print(line) for line in table]
+    columns_max_sizes, lines_images = get_table_line_images(table)
+    return columns_max_sizes, lines_images
